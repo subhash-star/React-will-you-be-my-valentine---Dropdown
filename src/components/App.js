@@ -140,10 +140,55 @@ const states = [{
 
 function App() 
 {
-	// Do not alter/remove main div
+	const [state,setState]=useState(0);
+	const [city,setCity]=useState(0);
+	const [landmark,setLandmark]=useState(0);
+
+	const stateChange=(e)=>{
+		// console.log(e.target.selectedOptions[0].index);
+		setState(state=>e.target.selectedOptions[0].index)
+		setCity(city=>city=0)
+		setLandmark(landmark=>0);
+	}
+	const cityChange=(e)=>{
+		setCity(city=>e.target.selectedOptions[0].index)
+		setLandmark(landmark=>0);
+	}
+	const landmarkChange=(e)=>{
+		setLandmark(landmark=>e.target.selectedOptions[0].index);
+	}
 	return (
 	<div id="main">
+		<label >State</label>
+		<select name="state" id="state" value={`${state}`} onChange={()=>stateChange(event)}>
+			{states.map((el,index)=> <option value={`${index}`} >{el.name}</option>)}		
+		</select>
+		<div className="box">
+			<div id="state-name">{states[state].name}</div>
+			<div id="state-description">{states[state].description}</div>
+		</div>
+		<br></br>
+		<br></br>
+
+		<label >city</label>
+		<select name="city" id="city"  value={`${city}`}onChange={()=>cityChange(event)}>
+			{states[state].city.map((el,index)=> <option value={`${index}`} >{el.name}</option>)}		
+		</select>
+		<div className="box">
+			<div id="city-name">{states[state].city[city].name}</div>
+			<div id="city-description">{states[state].city[city].description}</div>
+		</div>
+		<br></br>
+		<br></br>
 		
+		<label >Town</label>
+		<select name="landmark" id="landmark" value={`${landmark}`}onChange={()=>landmarkChange(event)}>
+			{states[state].city[city].landmarks.map((el,index)=> <option value={`${index}`} >{el.name}</option>)}		
+		</select>
+		<div className="box">
+			<div id="landmark-name">{states[state].city[city].landmarks[landmark].name}</div>
+			<div id="landmark-description">{states[state].city[city].landmarks[landmark].description}</div>
+		</div>		
 	</div>
 	);
 }
